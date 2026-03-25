@@ -46,10 +46,6 @@ elif transaction_type == "Net Banking":
 if account_age == "New Account":
     fraud_score += 25
 
-# Login attempts
-if login_attempts >= 3:
-    fraud_score += 25
-
 # Fraud history
 if fraud_history == "Yes":
     fraud_score += 30
@@ -99,6 +95,5 @@ if st.button("🔍 Analyze Transaction"):
     st.write(f"Amount: ₹{amount}")
     st.write(f"Transaction Type: {transaction_type}")
     st.write(f"Account Age: {account_age}")
-    st.write(f"Login Attempts: {login_attempts}")
     st.write(f"Previous Fraud History: {fraud_history}")
     st.write(f"Device: {device}")
