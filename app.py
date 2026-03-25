@@ -19,8 +19,6 @@ transaction_type = st.selectbox("Transaction Type", ["UPI", "Card", "Net Banking
 
 account_age = st.selectbox("Account Age", ["Old Account", "New Account"])
 
-login_attempts = st.number_input("Failed Login Attempts", min_value=0, max_value=10)
-
 fraud_history = st.selectbox("Previous Fraud History", ["No", "Yes"])
 
 device = st.selectbox("Device", ["Known Device", "New Device"])
