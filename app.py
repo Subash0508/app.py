@@ -4,40 +4,67 @@ import random
 st.set_page_config(page_title="Fraud Detection System", layout="centered")
 
 st.title("🏦 Smart Fraud Detection System")
-st.markdown("### 💳 Digital Payment Security Demo")
+st.markdown("### 💳 Advanced Digital Payment Security Demo")
 
 st.divider()
 
-# Input Section
+# -----------------------------
+# INPUT SECTION
+# -----------------------------
 st.subheader("Enter Transaction Details")
 
 amount = st.number_input("Transaction Amount (₹)", min_value=0)
-location = st.selectbox("Location", ["Same Country", "Different Country"])
-time = st.selectbox("Time", ["Day", "Night"])
+
+transaction_type = st.selectbox("Transaction Type", ["UPI", "Card", "Net Banking"])
+
+account_age = st.selectbox("Account Age", ["Old Account", "New Account"])
+
+login_attempts = st.number_input("Failed Login Attempts", min_value=0, max_value=10)
+
+fraud_history = st.selectbox("Previous Fraud History", ["No", "Yes"])
+
 device = st.selectbox("Device", ["Known Device", "New Device"])
 
 st.divider()
 
-# Fraud Logic
+# -----------------------------
+# FRAUD LOGIC
+# -----------------------------
 fraud_score = 0
 
+# Amount check
 if amount > 5000:
     fraud_score += 30
 elif amount > 1000:
     fraud_score += 15
 
-if location == "Different Country":
+# Transaction type risk
+if transaction_type == "Card":
+    fraud_score += 15
+elif transaction_type == "Net Banking":
+    fraud_score += 10
+
+# Account age
+if account_age == "New Account":
     fraud_score += 25
 
-if time == "Night":
-    fraud_score += 20
+# Login attempts
+if login_attempts >= 3:
+    fraud_score += 25
 
-if device == "New Device":
+# Fraud history
+if fraud_history == "Yes":
     fraud_score += 30
+
+# Device check
+if device == "New Device":
+    fraud_score += 20
 
 fraud_probability = min(fraud_score, 100)
 
-# Show result
+# -----------------------------
+# OUTPUT SECTION
+# -----------------------------
 if st.button("🔍 Analyze Transaction"):
     st.subheader("Analysis Result")
 
@@ -65,10 +92,15 @@ if st.button("🔍 Analyze Transaction"):
     else:
         st.success("✅ Safe Transaction")
 
-    # Transaction Log
+    # -----------------------------
+    # TRANSACTION SUMMARY
+    # -----------------------------
     st.divider()
     st.subheader("📜 Transaction Summary")
+
     st.write(f"Amount: ₹{amount}")
-    st.write(f"Location: {location}")
-    st.write(f"Time: {time}")
+    st.write(f"Transaction Type: {transaction_type}")
+    st.write(f"Account Age: {account_age}")
+    st.write(f"Login Attempts: {login_attempts}")
+    st.write(f"Previous Fraud History: {fraud_history}")
     st.write(f"Device: {device}")
